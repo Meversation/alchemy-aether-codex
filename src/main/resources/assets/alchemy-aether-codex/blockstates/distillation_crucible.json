@@ -1,0 +1,9 @@
+{
+  "multipart": [
+    {
+      "apply": {
+        "model": "alchemy-aether-codex:block/distillation_crucible"
+      }
+    }
+  ]
+}

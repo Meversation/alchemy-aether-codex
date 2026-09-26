@@ -1,0 +1,12 @@
+pluginManagement {
+	repositories {
+        maven { name = 'Hanbing\'s proxy maven'; url = 'https://repository.hanbings.io/proxy/' }
+        // fabricloom 原版的仓库
+        maven { name = 'Fabric'; url = 'https://maven.fabricmc.net/' }
+        // 其余插件所存放的仓库
+        gradlePluginPortal()
+	}
+}
+
+// Should match your modid
+rootProject.name = 'alchemy-aether-codex'

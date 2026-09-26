@@ -1,0 +1,42 @@
+{
+	"schemaVersion": 1,
+	"id": "alchemy-aether-codex",
+	"version": "${version}",
+	"name": "Alchemy: Aether Codex",
+	"description": "none",
+	"authors": [
+		"Meversation",
+        "Vercation_RSWT"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/alchemy-aether-codex/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"com.mever.alchemy_aether_codex.AlchemyAetherCodex"
+		],
+		"client": [
+			"com.mever.alchemy_aether_codex.client.AlchemyAetherCodexClient"
+		],
+		"fabric-datagen": [
+			"com.mever.alchemy_aether_codex.client.AlchemyAetherCodexDataGenerator"
+		]
+	},
+	"mixins": [
+		"alchemy-aether-codex.mixins.json",
+		{
+			"config": "alchemy-aether-codex.client.mixins.json",
+			"environment": "client"
+		}
+	],
+	"depends": {
+		"fabricloader": ">=0.19.5",
+		"minecraft": "~1.21.1",
+		"java": ">=21",
+		"fabric-api": "*"
+	}
+}
