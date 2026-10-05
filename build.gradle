@@ -31,6 +31,16 @@ repositories {
 loom {
 	splitEnvironmentSourceSets()
 
+	// 本机仅 3.9GB 物理内存: 限制客户端/服务端堆内存, 否则 runClient 直接撑爆
+	runConfigs {
+		client {
+			vmArgs "-Xmx2G"
+		}
+		server {
+			vmArgs "-Xmx2G"
+		}
+	}
+
 	mods {
 		"alchemy-aether-codex" {
 			sourceSet sourceSets.main

@@ -1,6 +1,9 @@
 pluginManagement {
 	repositories {
-        maven { name = 'Hanbing\'s proxy maven'; url = 'https://repository.hanbings.io/proxy/' }
+        // 阿里云 gradle-plugin 镜像: 国内可达, 含 plugins.gradle.org 的插件与传递依赖(asm 等)
+        maven { name = 'AliyunPlugin'; url = 'https://maven.aliyun.com/repository/gradle-plugin' }
+        // 阿里云 public: Maven Central 聚合, 兜底 kotlin-metadata 等 central 依赖
+        maven { name = 'AliyunPublic'; url = 'https://maven.aliyun.com/repository/public' }
         // fabricloom 原版的仓库
         maven { name = 'Fabric'; url = 'https://maven.fabricmc.net/' }
         // 其余插件所存放的仓库

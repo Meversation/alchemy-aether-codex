@@ -7,12 +7,16 @@ import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.particle.ParticleTypes;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.hit.BlockHitResult;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.world.World;
+import net.minecraft.sound.SoundCategory;
+import net.minecraft.sound.SoundEvents;
+import net.minecraft.server.world.ServerWorld;
 
 public class DistillationCrucibleBlock extends Block {
 
@@ -98,7 +102,9 @@ public class DistillationCrucibleBlock extends Block {
 
         // 检查三元素齐全
         if (newState.get(HAS_MERCURY) && newState.get(HAS_SULFUR) && newState.get(HAS_SALT)) {
-            AlchemyAetherCodex.LOGGER.info("[AAC] ========== 三元素齐全！触发爆炸！（待实现） ==========");
+            if(world instanceof ServerWorld serverworld) {
+                triggherExplosion(serverworld, pos);
+            }
             // 清空状态，允许重复使用
             newState = newState.with(HAS_MERCURY, false)
                                .with(HAS_SULFUR, false)
@@ -108,5 +114,30 @@ public class DistillationCrucibleBlock extends Block {
         // 应用新状态
         world.setBlockState(pos, newState);
         return ActionResult.SUCCESS;
+    }
+
+    private void triggherExplosion(ServerWorld world,BlockPos pos) {
+        double x = pos.getX() + 0.5;
+        double y = pos.getY() + 1.0;
+        double z = pos.getZ() + 0.5;
+        
+        //explosion
+        world.spawnParticles(ParticleTypes.END_ROD,
+            x, y, z, 20, 0.4, 0.2, 0.4, 0.05);
+        world.spawnParticles(ParticleTypes.FLAME,
+            x, y, z, 20, 0.4, 0.2, 0.4, 0.05);
+        world.spawnParticles(ParticleTypes.CRIT,
+            x, y, z, 20, 0.4, 0.2, 0.4, 0.05);
+
+        //sound
+        world.playSound(null, pos, 
+            SoundEvents.ENTITY_GENERIC_EXPLODE.value(),SoundCategory.BLOCKS,0.6f,1.2f);
+        world.playSound(null, pos,
+            SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.8f, 1.0f);
+        world.playSound(null, pos,
+            SoundEvents.BLOCK_AMETHYST_BLOCK_CHIME, SoundCategory.BLOCKS, 0.8f, 1.5f);
+
+        AlchemyAetherCodex.LOGGER.info("[AAC] Boom!");
+
     }
 }
