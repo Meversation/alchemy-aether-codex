@@ -5,8 +5,10 @@ import com.mever.alchemy_aether_codex.item.ModItems;
 import net.minecraft.block.Block;
 import net.minecraft.block.BlockState;
 import net.minecraft.entity.player.PlayerEntity;
+import net.minecraft.entity.ItemEntity;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
+import net.minecraft.item.Items;
 import net.minecraft.particle.ParticleTypes;
 import net.minecraft.state.StateManager;
 import net.minecraft.state.property.BooleanProperty;
@@ -136,7 +138,11 @@ public class DistillationCrucibleBlock extends Block {
             SoundEvents.BLOCK_FIRE_EXTINGUISH, SoundCategory.BLOCKS, 0.8f, 1.0f);
         world.playSound(null, pos,
             SoundEvents.BLOCK_AMETHYST_BLOCK_CHIME, SoundCategory.BLOCKS, 0.8f, 1.5f);
-
+        //item spawn
+        int count = 1 + world.random.nextInt(3);
+        ItemStack gunpowder = new ItemStack(Items.GUNPOWDER,count);
+        ItemEntity itementity = new ItemEntity(world,x,y,z,gunpowder);
+        world.spawnEntity(itementity);
         AlchemyAetherCodex.LOGGER.info("[AAC] Boom!");
 
     }
